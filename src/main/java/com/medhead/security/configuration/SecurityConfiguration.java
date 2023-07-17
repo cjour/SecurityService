@@ -47,10 +47,11 @@ public class SecurityConfiguration {
                 .exceptionHandling().authenticationEntryPoint(((request, response, authException) -> {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                 })).and()
-                .authorizeHttpRequests().antMatchers("/homes").permitAll()
+                .authorizeHttpRequests().antMatchers("/isTokenValid").permitAll()
                 .anyRequest().authenticated().and()
                 .httpBasic();
 
+        // to add to this MS or the emergency one ?
         // httpSecurity.addFilterBefore()
 
         return httpSecurity.build();
