@@ -10,20 +10,18 @@ import java.util.Date;
 @Slf4j
 @Component
 public class JsonWebTokenUtils {
-
     private final String jwtSecret = "zdtlD3JK56m6wTTgsNFhqzjqP";
-    private final String issuer = "com.medhead";
-    private final Integer weekInMilliSeconds = 7 * 24 * 60 * 60 * 1000;
 
     public String generateToken(User user) {
+        int weekInMilliSeconds = 7 * 24 * 60 * 60 * 1000;
+        String issuer = "com.medhead";
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuer(issuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + weekInMilliSeconds))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact()
-        ;
+                .compact();
     }
 
     public Boolean isTokenValid(String token) {

@@ -19,7 +19,6 @@ import java.util.List;
 @Slf4j
 @Service
 public class LoginService implements UserDetailsService {
-
     @Autowired
     UserRepository userRepository;
 

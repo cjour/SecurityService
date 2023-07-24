@@ -21,17 +21,17 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
-                                                       UserDetailsService userDetailService) throws Exception {
-
-        log.info("AuthenticationManager");
+    public AuthenticationManager authenticationManager(
+            HttpSecurity http,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            UserDetailsService userDetailService
+    ) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailService)
                 .passwordEncoder(bCryptPasswordEncoder)
@@ -40,7 +40,6 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain chain(HttpSecurity httpSecurity) throws Exception {
-        log.info("SecurityFilterChain");
         httpSecurity
                 .cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
@@ -50,10 +49,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests().antMatchers("/isTokenValid").permitAll()
                 .anyRequest().authenticated().and()
                 .httpBasic();
-
-        // to add to this MS or the emergency one ?
-        // httpSecurity.addFilterBefore()
-
         return httpSecurity.build();
     }
 }

@@ -1,13 +1,10 @@
 package com.medhead.security.entity;
 
-import com.medhead.security.entity.InternalRole;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "internalusers")
 public class InternalUser {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,8 +21,7 @@ public class InternalUser {
         this.role = role;
     }
 
-    public InternalUser() {
-    }
+    public InternalUser() {}
 
     public String getUsername() {
         return username;

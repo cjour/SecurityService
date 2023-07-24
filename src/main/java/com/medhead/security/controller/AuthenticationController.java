@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 public class AuthenticationController {
-
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -42,7 +41,9 @@ public class AuthenticationController {
             String generatedToken = jsonWebTokenUtils.generateToken(authenticatedUser);
             log.info("[MEDHEAD] token is " + generatedToken);
 
-            return ResponseEntity.status(HttpStatus.OK).header("Token", generatedToken).build();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header("Token", generatedToken)
+                    .build();
 
         } catch (BadCredentialsException exception) {
 
@@ -54,8 +55,8 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(value = "/isJsonValid")
-    public Boolean isJwtValid(@RequestBody String token) {
+    @PostMapping(value = "/isTokenValid")
+    public Boolean isTokenValid(@RequestBody String token) {
         return jsonWebTokenUtils.isTokenValid(token);
     }
 }
